@@ -91,9 +91,26 @@ const bopomofo = [
   "ㄚ","ㄛ","ㄜ","ㄞ","ㄠ","ㄡ","ㄢ","ㄣ","ㄤ","ㄥ","ㄦ"
 ];
 
-let categories = JSON.parse(localStorage.getItem("categories")) || [
-  "動物","明星","食物","家裡會有的東西"
-];
+
+const defaultCategories = ["動物", "明星", "食物", "家裡會有的東西"];
+
+function loadCategories() {
+  let saved = null;
+  try {
+    saved = JSON.parse(localStorage.getItem("categories"));
+  } catch (e) {
+    saved = null;
+  }
+
+  // 只有在「saved 是非空陣列」才採用，否則回預設
+  if (Array.isArray(saved) && saved.length > 0) {
+    return saved;
+  }
+  return [...defaultCategories];
+}
+
+let categories = loadCategories();
+
 
 function saveCategories(){
   localStorage.setItem("categories", JSON.stringify(categories));
