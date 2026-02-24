@@ -6,74 +6,61 @@
 <title>ㄅㄆㄇ 急中生智</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    text-align: center;
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-align:center;
 }
-
-.container {
-    padding: 30px 20px;
+.container{ padding:30px 20px; }
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:30px;
+    margin:20px auto;
+    max-width:400px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
-
-.card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 30px;
-    margin: 20px auto;
-    max-width: 400px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+.letter{
+    font-size:90px;
+    font-weight:bold;
+    margin:10px 0;
+    transition:transform 0.2s ease;
 }
-
-.letter {
-    font-size: 90px;
-    font-weight: bold;
-    margin: 10px 0;
-    transition: transform 0.2s ease;
+.category{ font-size:28px; margin:10px 0; }
+button{
+    border:none;
+    border-radius:30px;
+    padding:10px 20px;
+    margin:5px;
+    font-size:16px;
+    cursor:pointer;
+    background:white;
+    color:#333;
+    font-weight:bold;
+    transition:0.2s;
 }
-
-.category {
-    font-size: 28px;
-    margin: 10px 0;
+button:hover{ transform:scale(1.05); }
+input{
+    padding:8px 12px;
+    border-radius:20px;
+    border:none;
+    font-size:14px;
+    margin-top:10px;
 }
-
-button {
-    border: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    background: white;
-    color: #333;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-button:hover {
-    transform: scale(1.05);
-}
-
-input {
-    padding: 8px 12px;
-    border-radius: 20px;
-    border: none;
-    font-size: 14px;
-    margin-top: 10px;
-}
-
-.list {
-    margin-top: 15px;
-    font-size: 14px;
+.list{ margin-top:15px; font-size:14px; }
+.list div{ margin:6px 0; }
+.list button{
+    padding:3px 10px;
+    border-radius:14px;
+    font-size:12px;
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <h2>ㄅㄆㄇ 急中生智</h2>
@@ -96,80 +83,79 @@ input {
 </div>
 
 <script>
-
 const bopomofo = [
-"ㄅ","ㄆ","ㄇ","ㄈ","ㄉ","ㄊ","ㄋ","ㄌ",
-"ㄍ","ㄎ","ㄏ","ㄐ","ㄑ","ㄒ",
-"ㄓ","ㄔ","ㄕ","ㄖ",
-"ㄗ","ㄘ","ㄙ",'ㄧ','ㄨ','ㄩ',
-'ㄚ','ㄛ','ㄜ','ㄞ','ㄠ'.'ㄡ','ㄢ','ㄣ','ㄤ','ㄥ','ㄦ'
+  "ㄅ","ㄆ","ㄇ","ㄈ","ㄉ","ㄊ","ㄋ","ㄌ",
+  "ㄍ","ㄎ","ㄏ","ㄐ","ㄑ","ㄒ",
+  "ㄓ","ㄔ","ㄕ","ㄖ",
+  "ㄗ","ㄘ","ㄙ","ㄧ","ㄨ","ㄩ",
+  "ㄚ","ㄛ","ㄜ","ㄞ","ㄠ","ㄡ","ㄢ","ㄣ","ㄤ","ㄥ","ㄦ"
 ];
 
 let categories = JSON.parse(localStorage.getItem("categories")) || [
-"動物","明星","食物","家裡會有的東西"
+  "動物","明星","食物","家裡會有的東西"
 ];
 
-function saveCategories() {
-    localStorage.setItem("categories", JSON.stringify(categories));
+function saveCategories(){
+  localStorage.setItem("categories", JSON.stringify(categories));
 }
 
-function renderList() {
-    const list = document.getElementById("categoryList");
-    list.innerHTML = "";
-    categories.forEach((item, index) => {
-        list.innerHTML += `
-            <div>
-                ${item}
-                <button onclick="deleteCategory(${index})">✕</button>
-            </div>
-        `;
-    });
+function renderList(){
+  const list = document.getElementById("categoryList");
+  list.innerHTML = "";
+  categories.forEach((item, index) => {
+    list.innerHTML += `
+      <div>
+        ${item}
+        <button onclick="deleteCategory(${index})">✕</button>
+      </div>
+    `;
+  });
 }
 
-function addCategory() {
-    const input = document.getElementById("newCategory");
-    const value = input.value.trim();
-    if (value !== "") {
-        categories.push(value);
-        saveCategories();
-        renderList();
-        input.value = "";
-    }
-}
-
-function deleteCategory(index) {
-    categories.splice(index, 1);
+function addCategory(){
+  const input = document.getElementById("newCategory");
+  const value = input.value.trim();
+  if(value !== ""){
+    categories.push(value);
     saveCategories();
     renderList();
+    input.value = "";
+  }
 }
 
-function clearCategories() {
-    if (confirm("確定清空？")) {
-        categories = [];
-        saveCategories();
-        renderList();
-    }
+function deleteCategory(index){
+  categories.splice(index, 1);
+  saveCategories();
+  renderList();
 }
 
-function generate() {
-    if (categories.length === 0) {
-        alert("請先新增題目！");
-        return;
-    }
-
-    const letter = bopomofo[Math.floor(Math.random() * bopomofo.length)];
-    const category = categories[Math.floor(Math.random() * categories.length)];
-
-    const letterDiv = document.getElementById("letter");
-    letterDiv.style.transform = "scale(1.3)";
-    setTimeout(() => letterDiv.style.transform = "scale(1)", 150);
-
-    document.getElementById("letter").textContent = letter;
-    document.getElementById("category").textContent = category;
+function clearCategories(){
+  if(confirm("確定清空？")){
+    categories = [];
+    saveCategories();
+    renderList();
+  }
 }
 
+function generate(){
+  if(categories.length === 0){
+    alert("請先新增題目！");
+    return;
+  }
+
+  const letter = bopomofo[Math.floor(Math.random() * bopomofo.length)];
+  const category = categories[Math.floor(Math.random() * categories.length)];
+
+  const letterDiv = document.getElementById("letter");
+  letterDiv.style.transform = "scale(1.3)";
+  setTimeout(() => letterDiv.style.transform = "scale(1)", 150);
+
+  document.getElementById("letter").textContent = letter;
+  document.getElementById("category").textContent = category;
+}
+
+// 一進來就渲染預設題庫
 renderList();
-
 </script>
 
 </body>
